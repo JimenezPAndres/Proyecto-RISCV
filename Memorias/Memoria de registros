@@ -1,0 +1,30 @@
+`timescale 1ns / 1ps
+
+module reg_memory(	
+	 input wire [31:0] dir1,       //Direccion de registro 1
+	 input wire [31:0] dir2,       //Direccion de registro 2
+	 input wire [31:0] dir_wrt,    //Direccion de registro a escribir
+	 input wire [31:0] valor,      //Valor a escribir
+	 input wire wrt,               //Bandera para escribir
+	 input wire clk,
+	 output reg [31:0] RD1		    //Valor del registro consultado
+	 );
+	 
+	 reg [31:0] reg_memory [0:31]; //Memoria de 32 registros de 32 bits
+	 
+	 
+    initial begin
+	 //Se guardan 3 datos como prueba
+	 reg_memory[0]<=32'h00000000;
+	 reg_memory[1]<=32'h00000001;
+	 reg_memory[2]<=32'h00000002;
+	 end
+	 
+	 always@(posedge clk) begin
+    RD1<=reg_memory[dir1];        //Se consulta eel registro con la direccion especificada
+		if (wrt==1) begin				 //Se escribe cuando la bandera se ppone en 1
+			reg_memory[dir_wrt]<=valor;
+		end
+	 end
+	 
+endmodule
