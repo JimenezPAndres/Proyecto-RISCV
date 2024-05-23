@@ -1,0 +1,35 @@
+`timescale 1ns / 1ps
+
+module reg_memory_tb;
+    reg clk, enable;
+	 reg [31:0] dir1;        //Primer dirección de registro
+	 reg [31:0] dir2;        //Segunda dirección de registro
+	 reg [31:0] dir_wrt;     //Dirección de registro a escribir
+	 reg [31:0] valor;       //Valor que se va a guardar
+	 reg wrt;                //Bandera para escribir o no
+	 wire [31:0] RD1;			   //Valor guardado en el registro especificado
+	
+	 reg_memory d(dir1,dir2,dir_wrt,valor,wrt,clk,RD1);
+
+   initial begin
+	 clk = 0;
+	 enable = 0;
+	 
+	 //Se guardan 3 datos iniciales como prueba
+	 #10 dir1 = 32'h00000000;
+	 #20 dir1 = 32'h00000001;
+	 #20 dir1 = 32'h00000002;
+	 
+	 //Se especifica uno de los 32 registros a escribir así como el valor
+	 #100 dir_wrt<=32'h00000009;
+	 #10 valor<=32'hFFFFFFFF;
+	 #10 wrt<=1; //Se habilita la escritura
+	 #20 wrt<=0;
+    end
+	
+    always #5 clk = ~clk;
+	 
+endmodule
+
+
+
