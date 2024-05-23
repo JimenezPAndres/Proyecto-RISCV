@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+
+module Ex_Signo_tb;
+	 reg [31:0] instruction;
+	 reg clk;
+	 wire [31:0] SE;
+	 
+	 Ext_Signo Ext_Signo_tb (instruction, clk, SE);
+	 
+	 initial begin
+	 clk=0;
+	 #10 instruction<=32'b11111110000011111010000000100011; //Instrucción de prueba
+	 
+	 end
+	 
+	 always #5 clk=~clk;
+
+
+endmodule
