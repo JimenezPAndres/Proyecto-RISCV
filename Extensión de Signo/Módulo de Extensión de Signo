@@ -1,0 +1,33 @@
+`timescale 1ns / 1ps
+
+module Ext_Signo(
+	 input wire [31:0] instruction,  //Recibe la informacion de la instrucción
+	 input wire clk,
+	 output reg [31:0] SE //Dato con extensión de signo
+    );
+	 
+	 reg [11:0] offset_s;	//Variable para cacular el offset
+	 reg [2:0] funct3;
+	 reg [6:0] opcode;
+	 
+	 reg [6:0] offset1;	//Primer parte del offset para las instrucciones S
+	 reg [4:0] offset2;	//Segunda parte del offset para las instrucciones S
+	 
+	 initial begin
+	 offset_s<=00000000000;	//Se inicializa el offset y se asignan los bits correspondientes a cada variable
+	 assign funct3=instruction[14:12];
+	 assign opcode=instruction[6:0];
+	 assign offset1=instruction[31:25];
+	 assign offset2=instruction[11:7];
+	 end
+	 
+	 always@(posedge clk) begin
+		if ((funct3==3'b010) && (opcode==7'b0100011)) begin //Se verifica que sea una operación S
+			offset_s[11:5]=offset1;	//Se calcula el offset
+			offset_s[4:0]=offset2;
+		end
+	 
+	 assign SE=offset_s;
+	 end
+	 
+endmodule
