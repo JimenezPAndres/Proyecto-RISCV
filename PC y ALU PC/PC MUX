@@ -1,0 +1,13 @@
+module PC_MUX(input [0:1] PCSrc, input [0:31] ALU_4, input [0:31] ALU_inm, output reg[0:31] PC_in);
+
+  
+    always @*
+      case (PCSrc)
+         2'b00: PC_in = ALU_4;
+         2'b01: PC_in= ALU_inm ;
+         2'b10: PC_in = 0; // caso para el reset
+        
+      endcase
+					
+    
+endmodule
