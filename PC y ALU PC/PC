@@ -1,23 +1,21 @@
-  
- module PC(input reset,input clock,input [0:31] pc ,output reg [0:31] pc_out);
+ module PC(input reset,input PCSrc,input clock,input [0:31] extended ,output reg [0:31] pc_out);
     
-   always@*begin // condicion inicial para reset y definir valor de pc antes del ciclo de reloj y evitar X
-       if (reset) begin
-            pc_out <= 0;
-        end
-   end
-   
-   always@(posedge clock) begin // control del pc a partir del ciclo de reloj
-        if (reset) begin // en caso de un reset dentro de programa
-            pc_out<= 0;
-        end
-        
-        
-        else begin
-            pc_out <=pc;  // funcionamiento tipico de registro pc cuando reset = 0
-        
-        end
-        end
-        
-     
+ wire [0:31] pc_in;  
+
+ PC_MUX PC_MUX2( PCSrc, reset, clock,pc_out, extended,pc_in);
+ 
+ wire[0:1] PC_;
+ 
+always@(posedge reset or posedge clock)
+    if(reset)begin
+        pc_out<=0;
+    end else begin
+        if(PCSrc==0)
+            pc_out<=pc_in;
+        else
+            pc_out<=pc_out; // si se requiere hacer jump
+            end
+  
+
+
 endmodule
