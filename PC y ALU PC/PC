@@ -1,0 +1,16 @@
+ module PC(input reset,input [0:31] pc ,output reg [0:31] pc_out);
+
+    
+   always@*begin
+   
+           if (reset) begin
+            pc_out <= 0;
+        end
+        else begin
+            pc_out <=pc;
+        
+        end
+        end
+   
+endmodule
+
