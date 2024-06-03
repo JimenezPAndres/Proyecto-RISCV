@@ -9,8 +9,16 @@ module Ex_Signo_tb;
 	 
 	 initial begin
 	 clk=0;
-	 #10 instruction<=32'b11111110000011111010000000100011; //Instrucción de prueba
+	 #10 instruction<=32'b11111110000011111010000000000011; //Instrucción de prueba I
+	 //01010100000011111010010100100011
+	 #10 instruction<=32'h540FA523; //Instrucción de prueba S
+	 //010101001010
 	 
+	 
+	 //1101111
+	 #10 instruction<=32'b11000000000110000000000001101111; //Instrucción de prueba J
+	 
+	 #10 instruction<=32'b11111110000000000000000000110111; //Instrucción de prueba U
 	 end
 	 
 	 always #5 clk=~clk;
