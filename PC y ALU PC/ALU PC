@@ -1,0 +1,11 @@
+module ALUPC(input [0:32] extended, input [0:32] pc, input ALU_control, output [0:32] pc_out);
+
+    // SUMADOR DE ALU PC+4
+    
+    assign ALU_pc = pc+1;
+    assign ALU_inm = pc+extended;
+    
+    
+    assign pc_out = ALU_control ? ALU_pc : ALU_inm;
+
+endmodule
