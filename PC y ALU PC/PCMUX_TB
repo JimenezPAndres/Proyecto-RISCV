@@ -1,0 +1,25 @@
+module MUXPC_tb;
+
+reg [0:1] PCSrc;
+reg [0:31] ALU_4,ALU_inm;
+
+wire[0:31] PC_in;
+
+
+
+PC_MUX MUX( PCSrc,   ALU_4,   ALU_inm, PC_in);
+
+initial begin
+
+    PCSrc = 2'b10;
+    ALU_4 = 12;
+    ALU_inm = 300;
+    
+    #20 PCSrc = 2'b00;
+    #30 PCSrc = 2'b01;
+
+end
+
+
+
+endmodule
