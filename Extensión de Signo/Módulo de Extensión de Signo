@@ -1,33 +1,44 @@
 `timescale 1ns / 1ps
 
 module Ext_Signo(
-	 input wire [31:0] instruction,  //Recibe la informacion de la instrucción
+	 input wire [31:0] instruction,  //Recibe la información de la instrucción
 	 input wire clk,
 	 output reg [31:0] SE //Dato con extensión de signo
     );
 	 
-	 reg [11:0] offset_s;	//Variable para cacular el offset
-	 reg [2:0] funct3;
-	 reg [6:0] opcode;
-	 
-	 reg [6:0] offset1;	//Primer parte del offset para las instrucciones S
-	 reg [4:0] offset2;	//Segunda parte del offset para las instrucciones S
+	 reg [11:0] offsetIS;	//Variable para cacular el offset
+	 reg [19:0] offsetJ;
 	 
 	 initial begin
-	 offset_s<=00000000000;	//Se inicializa el offset y se asignan los bits correspondientes a cada variable
-	 assign funct3=instruction[14:12];
-	 assign opcode=instruction[6:0];
-	 assign offset1=instruction[31:25];
-	 assign offset2=instruction[11:7];
+	 offsetIS<=000000000000;	//Se inicializa el offset
+	 offsetJ<=0000000000000000000;
+	 SE<=32'b0;
 	 end
 	 
 	 always@(posedge clk) begin
-		if ((funct3==3'b010) && (opcode==7'b0100011)) begin //Se verifica que sea una operación S
-			offset_s[11:5]=offset1;	//Se calcula el offset
-			offset_s[4:0]=offset2;
-		end
-	 
-	 assign SE=offset_s;
+		case ({instruction[14:12],instruction[6:0]})
+			19'b0100000011: begin //Se verifica que sea una operación I
+				offsetIS=instruction[31:20];	//Se calcula el offset
+				SE[11:0]<=offsetIS[11:0];
+				end
+			19'b0100100011: begin //Se verifica que sea una operación S
+				offsetIS[11:5]=instruction[31:25];
+				offsetIS[4:0]=instruction[11:7];
+				SE[11:0]<=offsetIS[11:0];
+				end
+		endcase
+		//imm[20|10:1|11|19:12]
+		case(instruction[6:0]) //Se verifica que sea una operación J
+			7'b1101111: begin
+				offsetJ[19]=instruction[31];
+				offsetJ[9:0]=instruction[30:21];
+				offsetJ[10]=instruction[20];
+				offsetJ[18:11]=instruction[19:12];
+				SE[19:0]<=offsetJ[19:0];
+				end
+			7'b0110111: begin //Se verifica que sea una operación U
+				SE[19:0]<=instruction[31:12];
+				end
+		endcase		
 	 end
-	 
 endmodule
