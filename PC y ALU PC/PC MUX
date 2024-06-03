@@ -1,13 +1,19 @@
-module PC_MUX(input [0:1] PCSrc, input [0:31] ALU_4, input [0:31] ALU_inm, output reg[0:31] PC_in);
+module PC_MUX(input PCSrc,input reset,input clock ,input[0:31]pc, input[0:31] extended ,output reg[0:31] PC_in);
 
-  
-    always @*
-      case (PCSrc)
+wire [0:1] PCSrc_;
+wire[0:31] ALU_4,ALU_inm;
+ALUPC ALUPC_2(extended,  pc, ALU_4, ALU_inm);
+PCSrc_mux mux12(reset,clock ,PCSrc, PCSrc_);
+
+   
+   always @* begin
+      case (PCSrc_)
          2'b00: PC_in = ALU_4;
-         2'b01: PC_in= ALU_inm ;
-         2'b10: PC_in = 0; // caso para el reset
+         2'b10: PC_in= ALU_inm ;
+         2'b11: PC_in = 0; // caso para el reset
+         default: PC_in = 0;
         
       endcase
-					
+	end				
     
 endmodule
