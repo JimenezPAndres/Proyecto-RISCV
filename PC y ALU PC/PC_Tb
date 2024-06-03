@@ -1,23 +1,26 @@
 module PC_tb;
 
-    reg [0:31] pc;
-    reg clock;
+    reg [0:31]extended;
+    reg clock,reset,PCSrc;
     reg reset;
     
     wire [0:31]pc_out;
     
-    PC pc2(reset,clock,pc,pc_out);
+    
+    PC pc23 ( reset, PCSrc, clock,  extended  , pc_out);
+
     
     initial begin
     clock = 0;
     reset = 1;
-    pc = 1;
+    PCSrc = 0;
+    extended = 100;
     
     #50 reset = 0;
-    #100 pc = 2;
-    
-    #200 pc = 10;
-    
+    #45 PCSrc = 1;
+    #5 PCSrc = 0;
+    #45 PCSrc = 1;
+    #5 PCSrc = 0;
     
     end
     
