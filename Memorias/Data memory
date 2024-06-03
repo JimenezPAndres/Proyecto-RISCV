@@ -1,0 +1,33 @@
+module DataMemory(
+    input [31:0] address,
+    input [31:0] dataIn,
+    input MemRead,
+    input MemWrite,
+    output reg [31:0] dataOut
+);
+
+    //  memory array
+    reg [31:0] memory [0:47]; //
+    initial begin
+        $readmemh("mem.mem",memory,0,47);// archivo que contiene valores por default en memoria (corregirlo)
+    end
+
+    // Read 
+    always @ (posedge MemRead)
+    begin
+        if (address < 47)
+            dataOut <= memory[address];
+        else
+            dataOut <= 32'h00000000; // si address se saliera del rango de busqueda
+    end
+    
+    // Write 
+
+    always @ (posedge MemWrite)
+    begin
+        if (address < 256)
+            memory[address] <= dataIn;
+    end
+
+endmodule
+
