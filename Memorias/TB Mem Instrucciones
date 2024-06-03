@@ -1,0 +1,22 @@
+module instr_mem_tb;
+
+ 
+    
+    reg [0:47] pc;
+    wire [31:0]instr;
+
+    instr_mem d(instr,pc);  // 
+
+    initial begin
+        // Stimulus generation
+	
+	pc = 0;
+	
+	#50 pc = 4;
+      
+    end
+
+    // Monitor the output
+
+        
+endmodule
