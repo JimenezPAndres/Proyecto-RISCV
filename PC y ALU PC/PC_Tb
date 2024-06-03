@@ -1,0 +1,28 @@
+module PC_tb;
+
+    reg [0:31] pc;
+    reg clock;
+    reg reset;
+    
+    wire [0:31]pc_out;
+    
+    PC pc2(reset,clock,pc,pc_out);
+    
+    initial begin
+    clock = 0;
+    reset = 1;
+    pc = 1;
+    
+    #50 reset = 0;
+    #100 pc = 2;
+    
+    #200 pc = 10;
+    
+    
+    end
+    
+    
+    always #5 clock = ~clock;
+
+   
+endmodule
