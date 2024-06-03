@@ -1,0 +1,16 @@
+
+module PCSrc_mux(input reset, input clock,input PCSrc, output reg [0:1] PCSrc_);
+    assign select = reset & 1;
+    reg [0:1] pc2;
+    
+    always@(posedge clock) begin
+    pc2 = 0;
+    pc2 = PCSrc <<1;
+        case(select)
+            1'b0: PCSrc_ = pc2;
+            1'b1: PCSrc_ =  2'b11;
+            
+            default: PCSrc_ = 2'b11;
+        endcase 
+    end
+endmodule
