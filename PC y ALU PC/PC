@@ -1,16 +1,23 @@
+  
  module PC(input reset,input clock,input [0:31] pc ,output reg [0:31] pc_out);
-
     
-   always@(posedge clock) begin
-   
-           if (reset) begin
+   always@*begin // condicion inicial para reset y definir valor de pc antes del ciclo de reloj y evitar X
+       if (reset) begin
             pc_out <= 0;
         end
+   end
+   
+   always@(posedge clock) begin // control del pc a partir del ciclo de reloj
+        if (reset) begin // en caso de un reset dentro de programa
+            pc_out<= 0;
+        end
+        
+        
         else begin
-            pc_out <=pc;
+            pc_out <=pc;  // funcionamiento tipico de registro pc cuando reset = 0
         
         end
         end
-   
+        
+     
 endmodule
-
