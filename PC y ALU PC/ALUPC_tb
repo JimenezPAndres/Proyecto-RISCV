@@ -1,0 +1,22 @@
+module ALU_PC_tb;
+
+    reg [0:31] extended;
+    reg [0:31] pc;
+    reg [0:1]PCsrc;
+    
+
+    wire [0:31] ALU_4, ALU_inm;
+    
+    ALUPC alu(extended,pc,PCsrc,ALU_4,ALU_inm);
+    
+    initial begin
+    
+    extended = 200;
+    pc = 0;
+    #100 pc =123;
+    #200 extended = 12;
+    
+    
+    end
+
+endmodule
