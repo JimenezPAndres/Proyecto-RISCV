@@ -1,10 +1,10 @@
- module PC(input reset,input PCSrc,input clock,input [0:31] ALU_result ,output reg [0:31] pc_out);
+ module PC(input reset,input PCSrc,input clock,input [31:0] ALU_result ,output reg [31:0] pc_out);
     
- wire [0:31] pc_in;  
+ wire [31:0] pc_in;  
 
  PC_MUX PC_MUX2( PCSrc, reset, clock,pc_out, ALU_result,pc_in);
  
- wire[0:1] PC_;
+
  
 always@(posedge reset or posedge clock)
     if(reset)begin
