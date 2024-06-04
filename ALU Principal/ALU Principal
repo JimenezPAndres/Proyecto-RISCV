@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+
+module ALU_Principal(
+	input wire [1:0] ALUOp,
+	input wire [31:0] Dato1,
+	input wire [31:0] Dato2,
+	input wire clk,
+	output reg [31:0] Result
+    );
+	 
+	always@(posedge clk) begin
+		case (ALUOp)
+			2'b00:Result<=Dato1+Dato2;
+			2'b01:Result<=Dato1^Dato2;
+			2'b10:Result<=Dato1&Dato2;
+			2'b11:Result<=Dato1>>>Dato2;
+		endcase
+	end
+endmodule
