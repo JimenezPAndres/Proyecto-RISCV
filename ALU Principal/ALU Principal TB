@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+
+module ALU_Principal_tb;
+	reg [1:0] ALUOp;
+	reg [31:0] Dato1;
+	reg [31:0] Dato2;
+	reg clk;
+	wire [31:0] Result;
+
+	ALU_Principal ALU_Principal_tb (ALUOp,Dato1,Dato2,clk,Result);
+	
+	initial begin
+	clk=0;
+	ALUOp=00;
+	Dato1=32'h0000FFFF;
+	Dato2=32'h0000FFFF;
+	
+	#10 ALUOp=01;
+	#10 ALUOp=10;
+	#10 Dato2=32'h2;
+	#10 ALUOp=11;
+	end
+	always #5 clk=~clk;
+endmodule
