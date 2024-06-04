@@ -1,4 +1,4 @@
-module mux_extesion(
+module mux_extension(
     input [31:0] extension_signo,
     input [31:0] RS1,
     input ALUSrc,
