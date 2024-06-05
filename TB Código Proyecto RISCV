@@ -1,0 +1,18 @@
+`timescale 1ns / 1ps
+
+module RISCVTB;
+	reg clock;
+	reg reset;
+	
+	RISCV RISCVTB(clock,reset);
+
+	initial begin
+		clock=0;
+		reset=1;
+		
+		#10 reset=0;
+	end
+	always
+	 #10 clock=~clock;
+      
+endmodule
