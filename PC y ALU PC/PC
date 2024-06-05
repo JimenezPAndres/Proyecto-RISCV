@@ -1,8 +1,20 @@
- module PC(input reset,input PCSrc,input clock,input [31:0] ALU_result ,output reg [31:0] pc_out);
+ module PC(input reset,input JALR,input PCSrc,input clock,input [31:0] ALU_result ,output reg [31:0] pc_out);
     
- wire [31:0] pc_in;  
-
- PC_MUX PC_MUX2( PCSrc, reset, clock,pc_out, ALU_result,pc_in);
+ wire [31:0] pc_in;
+ wire PCSrc_;
+ wire [1:0] mux12;
+ assign mux12[1] = PCSrc;
+ assign mux12[0] = JALR;
+    
+  always @*
+      case (mux12)
+         2'b00: PCSrc_ = 0;
+         2'b01: PCSrc_ = 1;
+         2'b10 PCSrc_ = 0;
+         2'b11: PCSrc_ = 0;
+      endcase
+				
+ PC_MUX PC_MUX2( PCSrc_,reset, clock,pc_out, ALU_result,pc_in);
  
 
  
