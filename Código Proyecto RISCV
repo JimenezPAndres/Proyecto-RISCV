@@ -1,7 +1,8 @@
 
 module RISCV(
 	input wire clock,
-	input wire reset);
+	//input wire MemtoRegPrueba,
+	input reset);
 	
 	
 	wire [31:0] pc_out;
@@ -22,29 +23,28 @@ module RISCV(
 	wire PCSrc;
 	wire MemtoReg;
 	wire [1:0] ALUOp;
-	
+
 	//Puede que Jalr este mal y sea PCSrc
-	PC PC2(reset,0,clock,Result,pc_out);
+	PC PC2(reset,PCSrc,clock,Result,pc_out);
 	
 	instr_mem instr_mem2(output_memory,pc_out);
 	
-	reg_memory reg_memory2(output_memory[19:15],output_memory[24:20],output_memory[11:7],out_mux_mem,RegW,RD1,RD2);
+	reg_memory reg_memory2(reset,output_memory[19:15],output_memory[24:20],output_memory[11:7],out_mux_mem,RegW,clock,RD1,RD2);
 	
 	Ext_Signo Ext_Signo2(output_memory,clock,SE);
 
 	mux_Jalr mux_Jalr2(pc_out,RD1,Jalr,out_mux_JALR);
-	
+
 	mux_extension mux_extension2(SE,RD2,ALUSrc,out_mux_exte);
 	
 	ALU_Principal ALU_Principal2(ALUOp,out_mux_JALR,out_mux_exte,Result);
 	
 	DataMemory DataMemory2(Result,RD1,MemWrite,clock,dataOut);
 	
-	Mux_Mem Mux_Mem2(Result,dataOut,MemtoReg,out_mux_mem);
+	Main_Decoder Main_Decoder2(output_memory[6:0],output_memory[14:12],ALUD,RegW,ALUSrc,MemWrite,Jalr,PCSrc,MemtoReg);
 	
-	Main_Decoder Main_Decoder2(output_memory[5:0],output_memory[14:12],ALUD,RegW,ALUSrc,MemWrite,Jalr,PCSrc,MemtoReg);
+	Mux_Mem Mux_Mem2(Result,dataOut,MemtoReg,out_mux_mem);
 	
 	ALU_Decoder ALU_Decoder2(ALUD,output_memory[14:12],ALUOp);
 
 endmodule
-
