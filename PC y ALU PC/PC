@@ -1,20 +1,6 @@
- module PC(input reset,input JALR,input PCSrc,input clock,input [31:0] ALU_result ,output reg [31:0] pc_out);
+module PC(input reset,input PCSrc,input clock,input [0:31] extended ,output reg [0:31] pc_out);
     
- wire [31:0] pc_in;
- wire PCSrc_;
- wire [1:0] mux12;
- assign mux12[1] = PCSrc;
- assign mux12[0] = JALR;
-    
-  always @*
-      case (mux12)
-         2'b00: PCSrc_ = 0;
-         2'b01: PCSrc_ = 1;
-         2'b10 PCSrc_ = 0;
-         2'b11: PCSrc_ = 0;
-      endcase
-				
- PC_MUX PC_MUX2( PCSrc_,reset, clock,pc_out, ALU_result,pc_in);
+ wire [0:31] pc_in;
  
 
  
@@ -23,11 +9,8 @@ always@(posedge reset or posedge clock)
         pc_out<=0;
     end else begin
         if(PCSrc==0)
-            pc_out<=pc_in;
+            pc_out<=pc_out+1;
         else
-            pc_out<=pc_out; // si se requiere hacer jump
+            pc_out<=extended; // si se requiere hacer jump
             end
-  
-
-
 endmodule
