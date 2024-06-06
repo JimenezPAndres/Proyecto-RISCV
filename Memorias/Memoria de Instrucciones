@@ -1,24 +1,28 @@
-module instr_mem(output_memory,pc);
+module instr_mem(output_memory,pc_out);
    
     // entradas y salidas
  
     output reg [31:0] output_memory; // memoria de salida
-    input wire [0:47] pc;
+	 input wire [31:0] pc_out;
+	 
     
-     // Memoria 
+    // Memoria 
     reg [31:0] memory [0:47];
     
     // funcion de uso para controlar address
     // depende de los valores de pc
-    
+	 
+	 //Llamando a PC
+	 //PC PC2(reset,PCSrc,clock,extended,pc_out);
+ 
     initial begin
         $readmemh("mem.mem",memory,0,47);
     end
     
     always@* begin
-    output_memory <= memory[pc];
+    output_memory <= memory[pc_out];
     end
-    
+endmodule
 
- endmodule
+
  
