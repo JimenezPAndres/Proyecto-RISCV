@@ -7,9 +7,5 @@ module Mux_Mem(
     input MemtoReg,
     output [31:0] out_mux_mem
 );
-
     assign out_mux_mem = (MemtoReg) ?  Memoria: ALU;
-
-
-
 endmodule
