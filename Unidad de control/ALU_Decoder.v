@@ -13,10 +13,10 @@ always @* begin
     casez(in_ALU)
 
         4'b0zzz: output_result = 2'b00; //ADD
-        4'b1z00: output_result = 2'b00; //ADD
-        4'b1z01: output_result = 2'b01; //XOR
-        4'b1z10: output_result = 2'b10; //AND
-        4'b1z11: output_result = 2'b11; //SRA
+        4'b1000: output_result = 2'b00; //ADD
+        4'b1100: output_result = 2'b01; //XOR
+        4'b1111: output_result = 2'b10; //AND
+        4'b1101: output_result = 2'b11; //SRA
 
 
         default: output_result = 4'b0000; // Manejo de caso por defecto
