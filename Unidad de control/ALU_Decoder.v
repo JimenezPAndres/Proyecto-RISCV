@@ -5,7 +5,7 @@ module ALU_Decoder(
 );
 
 reg [3:0] in_ALU;
-reg output_result;
+reg [1:0] output_result;
 wire [1:0] ALUOp;
 
 always @* begin
