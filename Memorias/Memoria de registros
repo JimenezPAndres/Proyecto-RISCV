@@ -1,30 +1,184 @@
 `timescale 1ns / 1ps
 
+
+
 module reg_memory(	
-	 input wire [31:0] dir1,       //Dirección de registro 1
-	 input wire [31:0] dir2,       //Dirección de registro 2
-	 input wire [31:0] dir_wrt,    //Dirección de registro a escribir
+	 input wire reset,
+
+	 input wire [4:0] dir1,       //Dirección de registro 1
+
+	 input wire [4:0] dir2,       //Dirección de registro 2
+
+	 input wire [4:0] dir_wrt,    //Dirección de registro a escribir
+
 	 input wire [31:0] valor,      //Valor a escribir
+
 	 input wire wrt,               //Bandera para escribir
-	 input wire clk,
-	 output reg [31:0] RD1	       //Valor del registro consultado
+	 input wire clock,
+
+	 output reg [31:0] RD1,	       //Valor del registro consultado
+	 output reg [31:0] RD2	       //Valor del registro consultado	 
+
 	 );
+
 	 
+
 	 reg [31:0] reg_memory [0:31]; //Memoria de 32 registros de 32 bits
-	 
-	 
+
+
+
     initial begin
-	 //Se guardan 3 datos como prueba
-	 reg_memory[0]<=32'h00000000;
-	 reg_memory[1]<=32'h00000001;
-	 reg_memory[2]<=32'h00000002;
-	 end
-    
-    always@(posedge clk) begin
-    RD1<=reg_memory[dir1];        //Se consulta el registro con la dirección especificada
-		if (wrt==1) begin	//Se escribe cuando la bandera se ppone en 1
-			reg_memory[dir_wrt]<=valor;
-		end
-	 end
+
+        reg_memory[0] = 32'h00000023;
+
+        reg_memory[1] = 32'h00000023;
+
+        reg_memory[2] = 32'h00000023;
+
+        reg_memory[3] = 32'h00000023;
+
+        reg_memory[4] = 32'h00000023;
+
+        reg_memory[5] = 32'h00000023;
+
+        reg_memory[6] = 32'h00000023;
+
+        reg_memory[7] = 32'h00000023;
+
+        reg_memory[8] = 32'h00000023;
+
+        reg_memory[9] = 32'h00000023;
+
+        reg_memory[10] = 32'h00000023;
+
+        reg_memory[11] = 32'h00000023;
+
+        reg_memory[12] = 32'h00000023;
+
+        reg_memory[13] = 32'h00000023;
+
+        reg_memory[14] = 32'h00000023;
+
+        reg_memory[15] = 32'h00000023;
+
+        reg_memory[16] = 32'h00000023;
+
+        reg_memory[17] = 32'h00000023;
+
+        reg_memory[18] = 32'h00000023;
+
+        reg_memory[19] = 32'h00000023;
+
+        reg_memory[20] = 32'h00000023;
+
+        reg_memory[21] = 32'h00000023;
+
+        reg_memory[22] = 32'h00000023;
+
+        reg_memory[23] = 32'h00000023;
+
+        reg_memory[24] = 32'h00000023;
+
+        reg_memory[25] = 32'h00000023;
+
+        reg_memory[26] = 32'h00000023;
+
+        reg_memory[27] = 32'h00000023;
+
+        reg_memory[28] = 32'h00000023;
+
+        reg_memory[29] = 32'h00000023;
+
+        reg_memory[30] = 32'h00000023;
+
+        reg_memory[31] = 32'h00000023;
+
+    end
+
+	
+always @* begin
+
+    RD1=reg_memory[dir1];        //Se consulta el registro con la dirección especificada
+    RD2=reg_memory[dir2];        //Se consulta el registro con la dirección especificada
 	 
+end
+	 
+always @ (posedge clock) begin
+
+		if (wrt==1) begin	//Se escribe cuando la bandera se pone en 1
+
+			reg_memory[dir_wrt]=valor;
+
+		end
+		
+		if (reset==1) begin
+	     reg_memory[0] = 32'h00000023;
+
+        reg_memory[1] = 32'h00000023;
+
+        reg_memory[2] = 32'h00000023;
+
+        reg_memory[3] = 32'h00000023;
+
+        reg_memory[4] = 32'h00000023;
+
+        reg_memory[5] = 32'h00000023;
+
+        reg_memory[6] = 32'h00000023;
+
+        reg_memory[7] = 32'h00000023;
+
+        reg_memory[8] = 32'h00000023;
+
+        reg_memory[9] = 32'h00000023;
+
+        reg_memory[10] = 32'h00000023;
+
+        reg_memory[11] = 32'h00000023;
+
+        reg_memory[12] = 32'h00000023;
+
+        reg_memory[13] = 32'h00000023;
+
+        reg_memory[14] = 32'h00000023;
+
+        reg_memory[15] = 32'h00000023;
+
+        reg_memory[16] = 32'h00000023;
+
+        reg_memory[17] = 32'h00000023;
+
+        reg_memory[18] = 32'h00000023;
+
+        reg_memory[19] = 32'h00000023;
+
+        reg_memory[20] = 32'h00000023;
+
+        reg_memory[21] = 32'h00000023;
+
+        reg_memory[22] = 32'h00000023;
+
+        reg_memory[23] = 32'h00000023;
+
+        reg_memory[24] = 32'h00000023;
+
+        reg_memory[25] = 32'h00000023;
+
+        reg_memory[26] = 32'h00000023;
+
+        reg_memory[27] = 32'h00000023;
+
+        reg_memory[28] = 32'h00000023;
+
+        reg_memory[29] = 32'h00000023;
+
+        reg_memory[30] = 32'h00000023;
+
+        reg_memory[31] = 32'h00000023;
+	 end
+end
+
+	 
+
 endmodule
+
