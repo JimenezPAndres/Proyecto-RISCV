@@ -1,3 +1,19 @@
+//El objetivo de esta prueba es verificar que el módulo ALU_Principal funciona correctamente para
+//todas las operaciones aritméticas y lógicas definidas (suma, XOR, AND, y desplazamiento lógico 
+//a la derecha). 
+//Estimulos:
+//La secuencia en que se varían las señales de entrada del módulo es la siguiente:
+//Inicialmente, realizar una suma.
+//Cambiar la operación a XOR.
+//Cambiar la operación a AND.
+//Cambiar el segundo operando y realizar un desplazamiento lógico a la derecha.
+//Resultados esperados:
+//Para ALUOp = 00, la operación es una suma: Dato1 + Dato2.
+//Para ALUOp = 01, la operación es un XOR: Dato1 ^ Dato2.
+//Para ALUOp = 10, la operación es un AND: Dato1 & Dato2.
+//Para ALUOp = 11, la operación es un desplazamiento lógico a la derecha: Dato1 >>> Dato2.
+
+
 `timescale 1ns / 1ps
 
 module ALU_Principal_tb;
