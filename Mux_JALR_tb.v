@@ -1,3 +1,8 @@
+//El objetivo de la prueba es verificar el correcto funcionamiento del módulo mux_Jalr bajo 
+//diferentes condiciones de entrada. El archivo de testbench proporcionado define los estímulos
+//que se aplicarán al módulo bajo prueba (UUT) y espera observar los resultados esperados en 
+//la salida out_mux_JALR.
+
 `timescale 1ns / 1ps
 
 module mux_Jalr_tb;
