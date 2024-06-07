@@ -1,10 +1,16 @@
 module PC_tb;
 
-    reg [0:31]extended;
+    // el objetivo del TB es conocer como responde PC ante los estimulos externos que recibe por parte de las señales de entrada
+   // se espera que con la señal de reset se inicialice Pc en 0 y que cambie de valor en cada rising del reloj
+   // el valor que elegirá pc dependerá completamente de PCSrc que actua como selector de la salida
+  // se espera que con rst = 1 pc_out sea 0 y cuando se baje la señal pc_out sea 0 durante un ciclo y luego inicie el conteo lineal (siempre y cuando PCsrc sea 0
+  // cuando PCSrC sea 1 se espera que se cargue un valor calculado de forma externa durante JALR, JAL, etc.
+
+    reg [0:31]extended; // extended se refiere al valor calculado de forma externa
     reg clock,reset,PCSrc;
     reg reset;
     
-    wire [0:31]pc_out;
+    wire [0:31] pc_out;
     
     
     PC pc23 ( reset, PCSrc, clock,  extended  , pc_out);
@@ -29,3 +35,5 @@ module PC_tb;
 
    
 endmodule
+
+
