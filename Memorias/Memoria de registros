@@ -1,184 +1,70 @@
 `timescale 1ns / 1ps
 
+// Descripción: 
+// Este módulo implementa una memoria de registros con 32 registros de 32 bits
+// cada uno. Proporciona funcionalidades para leer y escribir registros, y
+// reiniciar la memoria de registros a valores predeterminados.
+// Entradas:
+// - reset: Señal de reinicio para restablecer los registros a valores predeterminados.
+// - dir1: Dirección del primer registro a leer.
+// - dir2: Dirección del segundo registro a leer.
+// - dir_wrt: Dirección del registro en el que se va a escribir.
+// - valor: Valor de 32 bits a escribir en el registro especificado.
+// - wrt: Señal de control que habilita la escritura en el registro.
+// - clock: Señal de reloj para la operación síncrona de escritura.
+// Salidas:
+// - RD1: Valor de 32 bits del primer registro leído.
+// - RD2: Valor de 32 bits del segundo registro leído.
+// Razón de implementación:
+// El módulo `reg_memory` es esencial en un procesador para proporcionar 
+// almacenamiento temporal y acceso rápido a datos durante la ejecución de 
+// instrucciones. La capacidad de leer y escribir en registros específicos y 
+// de reiniciar la memoria de registros es fundamental para la funcionalidad 
+// del procesador.
 
 
 module reg_memory(	
-	 input wire reset,
+	input wire reset,            // Señal de reinicio
+	input wire [4:0] dir1,       // Dirección de registro 1
+	input wire [4:0] dir2,       // Dirección de registro 2
+	input wire [4:0] dir_wrt,    // Dirección de registro a escribir
+	input wire [31:0] valor,     // Valor a escribir
+	input wire wrt,              // Bandera para escribir
+	input wire clock,            // Señal de reloj
 
-	 input wire [4:0] dir1,       //Dirección de registro 1
+	output reg [31:0] RD1,       // Valor del registro consultado
+	output reg [31:0] RD2        // Valor del registro consultado
+);
 
-	 input wire [4:0] dir2,       //Dirección de registro 2
+	// Memoria de 32 registros de 32 bits
+	reg [31:0] reg_memory [0:31];
 
-	 input wire [4:0] dir_wrt,    //Dirección de registro a escribir
-
-	 input wire [31:0] valor,      //Valor a escribir
-
-	 input wire wrt,               //Bandera para escribir
-	 input wire clock,
-
-	 output reg [31:0] RD1,	       //Valor del registro consultado
-	 output reg [31:0] RD2	       //Valor del registro consultado	 
-
-	 );
-
-	 
-
-	 reg [31:0] reg_memory [0:31]; //Memoria de 32 registros de 32 bits
-
-
-
-    initial begin
-
-        reg_memory[0] = 32'h00000023;
-
-        reg_memory[1] = 32'h00000023;
-
-        reg_memory[2] = 32'h00000023;
-
-        reg_memory[3] = 32'h00000023;
-
-        reg_memory[4] = 32'h00000023;
-
-        reg_memory[5] = 32'h00000023;
-
-        reg_memory[6] = 32'h00000023;
-
-        reg_memory[7] = 32'h00000023;
-
-        reg_memory[8] = 32'h00000023;
-
-        reg_memory[9] = 32'h00000023;
-
-        reg_memory[10] = 32'h00000023;
-
-        reg_memory[11] = 32'h00000023;
-
-        reg_memory[12] = 32'h00000023;
-
-        reg_memory[13] = 32'h00000023;
-
-        reg_memory[14] = 32'h00000023;
-
-        reg_memory[15] = 32'h00000023;
-
-        reg_memory[16] = 32'h00000023;
-
-        reg_memory[17] = 32'h00000023;
-
-        reg_memory[18] = 32'h00000023;
-
-        reg_memory[19] = 32'h00000023;
-
-        reg_memory[20] = 32'h00000023;
-
-        reg_memory[21] = 32'h00000023;
-
-        reg_memory[22] = 32'h00000023;
-
-        reg_memory[23] = 32'h00000023;
-
-        reg_memory[24] = 32'h00000023;
-
-        reg_memory[25] = 32'h00000023;
-
-        reg_memory[26] = 32'h00000023;
-
-        reg_memory[27] = 32'h00000023;
-
-        reg_memory[28] = 32'h00000023;
-
-        reg_memory[29] = 32'h00000023;
-
-        reg_memory[30] = 32'h00000023;
-
-        reg_memory[31] = 32'h00000023;
-
-    end
-
-	
-always @* begin
-
-    RD1=reg_memory[dir1];        //Se consulta el registro con la dirección especificada
-    RD2=reg_memory[dir2];        //Se consulta el registro con la dirección especificada
-	 
-end
-	 
-always @ (posedge clock) begin
-
-		if (wrt==1) begin	//Se escribe cuando la bandera se pone en 1
-
-			reg_memory[dir_wrt]=valor;
-
+	// Inicialización de la memoria a un valor predeterminado
+	initial begin
+		integer i;
+		for (i = 0; i < 32; i = i + 1) begin
+			reg_memory[i] = 32'h00000023;
 		end
-		
-		if (reset==1) begin
-	     reg_memory[0] = 32'h00000023;
+	end
 
-        reg_memory[1] = 32'h00000023;
+	// Lectura asíncrona de los registros
+	always @* begin
+		RD1 = reg_memory[dir1];    // Leer el valor del registro en dir1
+		RD2 = reg_memory[dir2];    // Leer el valor del registro en dir2
+	end
 
-        reg_memory[2] = 32'h00000023;
-
-        reg_memory[3] = 32'h00000023;
-
-        reg_memory[4] = 32'h00000023;
-
-        reg_memory[5] = 32'h00000023;
-
-        reg_memory[6] = 32'h00000023;
-
-        reg_memory[7] = 32'h00000023;
-
-        reg_memory[8] = 32'h00000023;
-
-        reg_memory[9] = 32'h00000023;
-
-        reg_memory[10] = 32'h00000023;
-
-        reg_memory[11] = 32'h00000023;
-
-        reg_memory[12] = 32'h00000023;
-
-        reg_memory[13] = 32'h00000023;
-
-        reg_memory[14] = 32'h00000023;
-
-        reg_memory[15] = 32'h00000023;
-
-        reg_memory[16] = 32'h00000023;
-
-        reg_memory[17] = 32'h00000023;
-
-        reg_memory[18] = 32'h00000023;
-
-        reg_memory[19] = 32'h00000023;
-
-        reg_memory[20] = 32'h00000023;
-
-        reg_memory[21] = 32'h00000023;
-
-        reg_memory[22] = 32'h00000023;
-
-        reg_memory[23] = 32'h00000023;
-
-        reg_memory[24] = 32'h00000023;
-
-        reg_memory[25] = 32'h00000023;
-
-        reg_memory[26] = 32'h00000023;
-
-        reg_memory[27] = 32'h00000023;
-
-        reg_memory[28] = 32'h00000023;
-
-        reg_memory[29] = 32'h00000023;
-
-        reg_memory[30] = 32'h00000023;
-
-        reg_memory[31] = 32'h00000023;
-	 end
-end
-
-	 
+	// Escritura sincrónica y reinicio de registros
+	always @ (posedge clock) begin
+		if (reset == 1) begin
+			// Reiniciar todos los registros a un valor predeterminado
+			integer i;
+			for (i = 0; i < 32; i = i + 1) begin
+				reg_memory[i] = 32'h00000023;
+			end
+		end else if (wrt == 1) begin
+			// Escribir en el registro especificado
+			reg_memory[dir_wrt] = valor;
+		end
+	end
 
 endmodule
-
