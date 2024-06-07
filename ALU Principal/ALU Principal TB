@@ -27,14 +27,14 @@ module ALU_Principal_tb;
 	
 	initial begin
 	clk=0;
-	ALUOp=00;
-	Dato1=32'h0000FFFF;
-	Dato2=32'h0000FFFF;
+	ALUOp=00;//SUMA
+	Dato1=32'h0000FFFF; //Primer dato de 32 bits para hacer la operación
+	Dato2=32'h0000FFFF; //Segundo dato de 32 bits para hacer la operación
 	
-	#10 ALUOp=01;
-	#10 ALUOp=10;
-	#10 Dato2=32'h2;
-	#10 ALUOp=11;
+	#10 ALUOp=01;//XOR
+	#10 ALUOp=10;//AND
+	#10 Dato2=32'h2;//Cambio del segundo dato
+	#10 ALUOp=11;//SAR
 	end
 	always #5 clk=~clk;
 endmodule
