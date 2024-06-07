@@ -1,3 +1,16 @@
+//Verificar que el módulo Ext_Signo realiza correctamente la extensión de signo para diferentes 
+//tipos de instrucciones: I, S, J, y U.
+//Estimulos:
+//La secuencia de variación de las señales de entrada es la siguiente:
+//Instrucción tipo I.
+//Instrucción tipo S.
+//Instrucción tipo J.
+//Instrucción tipo U.
+//Resultados esperados:
+//Para cada tipo de instrucción, se debe verificar la extensión de signo adecuada basada en el 
+//formato de la instrucción.
+
+
 `timescale 1ns / 1ps
 
 module Ex_Signo_tb;
