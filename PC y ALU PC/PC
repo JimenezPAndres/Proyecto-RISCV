@@ -1,16 +1,20 @@
+
+// Descripcion del modulo: El Pc actua como el contador del programa, es decir, indica a la arquitectura la direccion
+// de la memoria de instrucciones para que sea leida y se modifiquen los valores de registros o memoria de datos segun corresponda
+// elige ademas entre 2 señales posibles para pc dependiendo del valor de PCSrc, señal que indica si debe contar segun pc+4 o de un valor calculado
+
+
 module PC(input reset,input PCSrc,input clock,input [0:31] extended ,output reg [0:31] pc_out);
     
  wire [0:31] pc_in;
  
-
- 
 always@(posedge reset or posedge clock)
-    if(reset)begin
+    if(reset)begin // cuando inicia el programa eL reset activo ayuda a pc a ubicarse y saber que debe iniciar en 0
         pc_out<=0;
     end else begin
-        if(PCSrc==0)
+        if(PCSrc==0) // PCSrc en 0 indica que debe continuar el flujo lineal de las instrucciones
             pc_out<=pc_out+1;
         else
-            pc_out<=extended; // si se requiere hacer jump
+            pc_out<=extended; // si se requiere hacer un jump o elegir un valor calculado PCSrc ayuda a este salto
             end
 endmodule
