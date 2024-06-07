@@ -76,11 +76,11 @@ module RISCV(
 
 	
 
-	ALU_Principal ALU_Principal2(ALUOp,out_mux_JALR,out_mux_exte,Result);
+	ALU_Principal ALU_Principal2(output_memory[6:0],ALUOp,out_mux_JALR,out_mux_exte,Result);
 
 	
 
-	DataMemory DataMemory2(Result,RD2,MemWrite,clock,dataOut);
+	DataMemory DataMemory2(Result,RD2,MemWrite,clock,pc_out,dataOut);
 
 	
 
