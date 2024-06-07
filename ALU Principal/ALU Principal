@@ -1,3 +1,19 @@
+// Descripción: 
+// Este módulo implementa una Unidad Aritmético-Lógica (ALU) simple que realiza
+// diferentes operaciones aritméticas y lógicas en base a un código de operación
+// de 2 bits (ALUOp). Las operaciones incluyen suma, XOR, AND y desplazamiento
+// aritmético a la derecha.
+// Entradas:
+// - ALUOp: Código de operación de 2 bits que determina la operación a realizar.
+// - Dato1: Primer operando de 32 bits.
+// - Dato2: Segundo operando de 32 bits.
+// Salidas:
+// - Result: Resultado de la operación de 32 bits.
+// Razón de implementación:
+// El módulo ALU_Principal es fundamental para realizar operaciones aritméticas
+// y lógicas en un procesador, permitiendo la ejecución de instrucciones básicas
+// necesarias para el funcionamiento de un CPU.
+
 `timescale 1ns / 1ps
 
 module ALU_Principal(
