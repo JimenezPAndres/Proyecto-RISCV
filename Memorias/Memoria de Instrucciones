@@ -1,28 +1,28 @@
+
 module instr_mem(output_memory,pc_out);
    
-    // entradas y salidas
+    // DESCRIPCION DEL MODULO: Este modulo corresponde a la memoria de instrucciones, es decir, se encarga de a partir de una direccion
+    // obtener una instruccion de 32 bits con informacion que posteriormente es enviada a decodificacion
+    // para efectos de esta arquitectura unicamente lee los valores precargados tras el objdump de forma asincrona y los envia
+    // El estimulo
  
     output reg [31:0] output_memory; // memoria de salida
-	 input wire [31:0] pc_out;
+	input wire [31:0] pc_out; // valor de PC o address que le entra a memoria 
 	 
     
     // Memoria 
-    reg [31:0] memory [0:47];
-    
-    // funcion de uso para controlar address
-    // depende de los valores de pc
-	 
-	 //Llamando a PC
-	 //PC PC2(reset,PCSrc,clock,extended,pc_out);
+    reg [31:0] memory [0:47]; // variable memory define la memoria 
  
     initial begin
-        $readmemh("mem.mem",memory,0,47);
+        $readmemh("mem.mem",memory,0,47);// asigna memory a valores de memoria de archivo
     end
     
     always@* begin
-    output_memory <= memory[pc_out];
+    output_memory <= memory[pc_out]; // asigna instruccion de salida a valor dado por pc_out
     end
 endmodule
 
+ 
+ 
 
  
