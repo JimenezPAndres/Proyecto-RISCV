@@ -20,12 +20,12 @@
 
 
 module ALU_Decoder(
-    input wire ALUD,
-    input wire [2:0] F,
+    input wire ALUD, //señal de salida del main decoder
+    input wire [2:0] F, //funct 3
     output wire [1:0] ALUOp 
 );
 
-reg [3:0] in_ALU;
+reg [3:0] in_ALU; //unión de ALUD y F
 reg [1:0] output_result;
 
 always @* begin
