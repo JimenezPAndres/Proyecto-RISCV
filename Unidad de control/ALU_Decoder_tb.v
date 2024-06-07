@@ -1,24 +1,17 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 06/02/2024 02:36:34 PM
-// Design Name: 
-// Module Name: ALU_Decoder_tb
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+//Objetivos:
+//el objetivo de la prueba es verificar que el módulo ALU_Decoder genere correctamente la señal 
+//de salida ALUOp para diversas combinaciones de las señales de entrada ALUD y F. Esta señal de 
+//salida indica la operación que debe realizar la ALU, basándose en la lógica de decodificación 
+//implementada en el módulo.
+//Los resultados esperados se indican a la par de cada prueba
+//Estímulos:
+//Se inicializa todo en 0, y se esperan 10 unidades de tiempo.
+//Se realizan 8 casos distintos y se espera 10 unidades de tiempo entre cada uno.
 
+
+
+
+`timescale 1ns / 1ps
 
 module ALU_Decoder_tb (
     );
