@@ -1,380 +1,82 @@
+`timescale 1ns / 1ps
+
+// Descripción: 
+// Este módulo implementa una memoria de datos simple. Proporciona funcionalidades
+// para leer y escribir datos en una memoria de 151 palabras de 32 bits. Además,
+// genera un volcado de memoria en un archivo cuando la PC alcanza un valor 
+// específico.
+// Entradas:
+// - address: Dirección de memoria de 32 bits donde se realizará la operación.
+// - dataIn: Datos de entrada de 32 bits a escribir en la memoria.
+// - MemWrite: Señal de control que habilita la escritura en la memoria.
+// - clock: Señal de reloj para la operación síncrona de escritura.
+// - PC: Contador de programa que, cuando alcanza un valor específico, activa 
+// el volcado de la memoria.
+// Salidas:
+// - dataOut: Datos de salida de 32 bits leídos de la memoria.
+// Razón de implementación:
+// El módulo `DataMemory` es esencial en un sistema de procesamiento para 
+// almacenar y recuperar datos durante la ejecución del programa. Proporciona 
+// una forma de acceder a una memoria de datos y de registrar el estado de la 
+// memoria en un archivo para fines de depuración.
+
 module DataMemory(
+    input [31:0] address,    // Dirección de memoria de 32 bits
+    input [31:0] dataIn,     // Datos de entrada de 32 bits
+    input MemWrite,          // Señal de control de escritura
+    input clock,             // Señal de reloj
+    input [31:0] PC,         // Contador de programa
 
-    input [31:0] address,
-
-    input [31:0] dataIn,
-
-    input MemWrite,
-	 input clock,
-	 input [31:0] PC,
-
-    output reg [31:0] dataOut
-
+    output reg [31:0] dataOut // Datos de salida de 32 bits
 );
 
-
-
-    //  memory array
-
+    // Memoria de datos de 151 palabras de 32 bits
     reg [31:0] memory [0:150];
-	 initial begin
-
-		memory[0] = 32'h00000000;
-
-		memory[1] = 32'h00000000;
-
-		memory[2] = 32'h00000000;
-
-		memory[3] = 32'h00000000;
-
-		memory[4] = 32'h00000000;
-
-		memory[5] = 32'h00000000;
-
-		memory[6] = 32'h00000000;
-
-		memory[7] = 32'h00000000;
-
-		memory[8] = 32'h00000000;
-
-		memory[9] = 32'h00000000;
-
-		memory[10] = 32'h00000000;
-
-		memory[11] = 32'h00000000;
-
-		memory[12] = 32'h00000000;
-
-		memory[13] = 32'h00000000;
-
-		memory[14] = 32'h00000000;
-
-		memory[15] = 32'h00000000;
-
-		memory[16] = 32'h00000000;
-
-		memory[17] = 32'h00000000;
-
-		memory[18] = 32'h00000000;
-
-		memory[19] = 32'h00000000;
-
-		memory[20] = 32'h00000000;
-
-		memory[21] = 32'h00000000;
-
-		memory[22] = 32'h00000000;
-
-		memory[23] = 32'h00000000;
-
-		memory[24] = 32'h00000000;
-
-		memory[25] = 32'h00000000;
-
-		memory[26] = 32'h00000000;
-
-		memory[27] = 32'h00000000;
-
-		memory[28] = 32'h00000000;
-
-		memory[29] = 32'h00000000;
-
-		memory[30] = 32'h00000000;
-
-		memory[31] = 32'h00000000;
-
-		memory[32] = 32'h00000000;
-
-		memory[33] = 32'h00000000;
-
-		memory[34] = 32'h00000000;
-
-		memory[35] = 32'h00000000;
-
-		memory[36] = 32'h00000000;
-
-		memory[37] = 32'h00000000;
-
-		memory[38] = 32'h00000000;
-
-		memory[39] = 32'h00000000;
-
-		memory[40] = 32'h00000000;
-
-		memory[41] = 32'h00000000;
-
-		memory[42] = 32'h00000000;
-
-		memory[43] = 32'h00000000;
-
-		memory[44] = 32'h00000000;
-
-		memory[45] = 32'h00000000;
-
-		memory[46] = 32'h00000000;
-
-		memory[47] = 32'h00000000;
-
-		memory[48] = 32'h00000000;
-
-		memory[49] = 32'h00000000;
-
-		memory[50] = 32'h00000000;
-
-		memory[51] = 32'h00000000;
-
-		memory[52] = 32'h00000000;
-
-		memory[53] = 32'h00000000;
-
-		memory[54] = 32'h00000000;
-
-		memory[55] = 32'h00000000;
-
-		memory[56] = 32'h00000000;
-
-		memory[57] = 32'h00000000;
-
-		memory[58] = 32'h00000000;
-
-		memory[59] = 32'h00000000;
-
-		memory[60] = 32'h00000000;
-
-		memory[61] = 32'h00000000;
-
-		memory[62] = 32'h00000000;
-
-		memory[63] = 32'h00000000;
-
-		memory[64] = 32'h00000000;
-
-		memory[65] = 32'h00000000;
-
-		memory[66] = 32'h00000000;
-
-		memory[67] = 32'h00000000;
-
-		memory[68] = 32'h00000000;
-
-		memory[69] = 32'h00000000;
-
-		memory[70] = 32'h00000000;
-
-		memory[71] = 32'h00000000;
-
-		memory[72] = 32'h00000000;
-
-		memory[73] = 32'h00000000;
-
-		memory[74] = 32'h00000000;
-
-		memory[75] = 32'h00000000;
-
-		memory[76] = 32'h00000000;
-
-		memory[77] = 32'h00000000;
-
-		memory[78] = 32'h00000000;
-
-		memory[79] = 32'h00000000;
-
-		memory[80] = 32'h00000000;
-
-		memory[81] = 32'h00000000;
-
-		memory[82] = 32'h00000000;
-
-		memory[83] = 32'h00000000;
-
-		memory[84] = 32'h00000000;
-
-		memory[85] = 32'h00000000;
-
-		memory[86] = 32'h00000000;
-
-		memory[87] = 32'h00000000;
-
-		memory[88] = 32'h00000000;
-
-		memory[89] = 32'h00000000;
-
-		memory[90] = 32'h00000000;
-
-		memory[91] = 32'h00000000;
-
-		memory[92] = 32'h00000000;
-
-		memory[93] = 32'h00000000;
-
-		memory[94] = 32'h00000000;
-
-		memory[95] = 32'h00000000;
-
-		memory[96] = 32'h00000000;
-
-		memory[97] = 32'h00000000;
-
-		memory[98] = 32'h00000000;
-
-		memory[99] = 32'h00000000;
-
-		memory[100] = 32'h00000000;
-
-		memory[101] = 32'h00000000;
-
-		memory[102] = 32'h00000000;
-
-		memory[103] = 32'h00000000;
-
-		memory[104] = 32'h00000000;
-
-		memory[105] = 32'h00000000;
-
-		memory[106] = 32'h00000000;
-
-		memory[107] = 32'h00000000;
-
-		memory[108] = 32'h00000000;
-
-		memory[109] = 32'h00000000;
-
-		memory[110] = 32'h00000000;
-
-		memory[111] = 32'h00000000;
-
-		memory[112] = 32'h00000000;
-
-		memory[113] = 32'h00000000;
-
-		memory[114] = 32'h00000000;
-
-		memory[115] = 32'h00000000;
-
-		memory[116] = 32'h00000000;
-
-		memory[117] = 32'h00000000;
-
-		memory[118] = 32'h00000000;
-
-		memory[119] = 32'h00000000;
-
-		memory[120] = 32'h00000000;
-
-		memory[121] = 32'h00000000;
-
-		memory[122] = 32'h00000000;
-
-		memory[123] = 32'h00000000;
-
-		memory[124] = 32'h00000000;
-
-		memory[125] = 32'h00000000;
-
-		memory[126] = 32'h00000000;
-
-		memory[127] = 32'h00000000;
-
-		memory[128] = 32'h00000000;
-
-		memory[129] = 32'h00000000;
-
-		memory[130] = 32'h00000000;
-
-		memory[131] = 32'h00000000;
-
-		memory[132] = 32'h00000000;
-
-		memory[133] = 32'h00000000;
-
-		memory[134] = 32'h00000000;
-
-		memory[135] = 32'h00000000;
-
-		memory[136] = 32'h00000000;
-
-		memory[137] = 32'h00000000;
-
-		memory[138] = 32'h00000000;
-
-		memory[139] = 32'h00000000;
-
-		memory[140] = 32'h00000000;
-
-		memory[141] = 32'h00000000;
-
-		memory[142] = 32'h00000000;
-
-		memory[143] = 32'h00000000;
-
-		memory[144] = 32'h00000000;
-
-		memory[145] = 32'h00000000;
-
-		memory[146] = 32'h00000000;
-
-		memory[147] = 32'h00000000;
-
-		memory[148] = 32'h00000000;
-
-		memory[149] = 32'h00000000;
-
-		memory[150] = 32'h00000000;
-
-end
-reg [7:0] addr;
-integer file;
-integer i;
-
-    // Read Asincrona
-
-    always@*
-
-    begin
-
-        if (MemWrite==0)
-
-            dataOut <= memory[address];
-				
-		  if (PC==17) begin
-// Abrir el archivo para escribir
-
-		  addr=0;
-        file = $fopen("data_memory_dump.txt", "w");
-
-        // Dump de la memoria
-        $fdisplay(file, "Dump de memoria de datos:");
-        for (i = 0; i < 150; i = i + 1) begin
-            addr = i;
-           // #10; // Esperar un ciclo de reloj
-            $fdisplay(file, "Direccion de Memoria %d: %h", addr, memory[i]);
-        end
-        // Cerrar el archivo
-        $fclose(file);
-
-        // Terminar la simulación
-        $finish;
-		  end
-	 
-
-
-    end
-
     
-	 
-
-    // Write Sincrona
-
-    always @ (posedge clock)
-
-    begin
-
-        if (MemWrite == 1)
-
-            memory[address] <= dataIn;
-
+    // Inicialización de la memoria a cero
+    initial begin
+        integer i;
+        for (i = 0; i <= 150; i = i + 1) begin
+            memory[i] = 32'h00000000;
+        end
     end
 
+    reg [7:0] addr;           // Dirección para el volcado de memoria
+    integer file;             // Archivo para el volcado de memoria
+    integer i;                // Índice para el volcado de memoria
 
+    // Lectura asíncrona de la memoria
+    always @* begin
+        if (MemWrite == 0) begin
+            dataOut <= memory[address];
+        end
+        
+        // Volcado de memoria cuando PC es 17
+        if (PC == 17) begin
+            // Abrir el archivo para escribir
+            addr = 0;
+            file = $fopen("data_memory_dump.txt", "w");
+
+            // Dump de la memoria
+            $fdisplay(file, "Dump de memoria de datos:");
+            for (i = 0; i < 150; i = i + 1) begin
+                addr = i;
+                $fdisplay(file, "Direccion de Memoria %d: %h", addr, memory[i]);
+            end
+
+            // Cerrar el archivo
+            $fclose(file);
+
+            // Terminar la simulación
+            $finish;
+        end
+    end
+
+    // Escritura sincrónica de la memoria
+    always @ (posedge clock) begin
+        if (MemWrite == 1) begin
+            memory[address] <= dataIn;
+        end
+    end
 
 endmodule
