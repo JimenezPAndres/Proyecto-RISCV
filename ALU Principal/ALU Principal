@@ -17,18 +17,18 @@
 `timescale 1ns / 1ps
 
 module ALU_Principal(
-	input wire [1:0] ALUOp,
-	input wire [31:0] Dato1,
-	input wire [31:0] Dato2,
-	output reg [31:0] Result
+	input wire [1:0] ALUOp, //Señal de control del alu decoder
+	input wire [31:0] Dato1, //Primer operando de 32 bits
+	input wire [31:0] Dato2, //Segundo operando de 32 bits
+	output reg [31:0] Result //Salida de 32 bits
     );
 	 
 	always @* begin
 		case (ALUOp)
-			2'b00:Result=Dato1+Dato2;
-			2'b01:Result=Dato1^Dato2;
-			2'b10:Result=Dato1&Dato2;
-			2'b11:Result=Dato1>>>Dato2;
+			2'b00:Result=Dato1+Dato2; //suma
+			2'b01:Result=Dato1^Dato2; //xor
+			2'b10:Result=Dato1&Dato2; //and
+			2'b11:Result=Dato1>>>Dato2; //sar
 			default: Result = 32'b0;  // Valor por defecto
 		endcase
 	end
