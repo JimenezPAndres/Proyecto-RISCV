@@ -1,3 +1,18 @@
+// Descripción: 
+// Este módulo realiza la extensión de signo de las constantes inmediatas
+// en las instrucciones RISC-V, que puede ser en formato I, S, B, U o J.
+// Dependiendo del tipo de instrucción, se extraen y se extienden los bits 
+// correspondientes para formar una constante de 32 bits.
+// Entradas:
+// - instruction: Instrucción completa de 32 bits de la cual se extrae la constante.
+// - clk: Señal de reloj.
+// Salidas:
+// - SE: Constante inmediata de 32 bits con extensión de signo.
+// Razón de implementación:
+// La extensión de signo es esencial para manejar las constantes inmediatas en las
+// instrucciones del conjunto de instrucciones RISC-V. Este módulo proporciona 
+// la lógica necesaria para extraer y extender correctamente estas constantes.
+
 `timescale 1ns / 1ps
 
 
