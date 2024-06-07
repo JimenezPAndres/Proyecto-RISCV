@@ -13,24 +13,27 @@
 //mediante una sentencia casez, se determina la operación de la ALU basada en el valor de in_ALU. 
 //Dependiendo del valor de este código combinado, se asigna un output_result de 2 bits, que se asigna 
 //a la salida ALUOp.
+//Razón de Implementación:
+//Este módulo fue creado para que por medio de una señal de control obtenida en el main decoder y el 
+//fucnt3 de las operaciones se identifique que operación aritmética debe de realizar la ALU principal. 
 
 
 
 module ALU_Decoder(
 
-    input wire ALUD,
+    input wire ALUD, //salida del main decoder
 
-    input wire [2:0] F,
+    input wire [2:0] F, //funct 3
 
-    output wire [1:0] ALUOp 
+    output wire [1:0] ALUOp //señal de control de la ALU. 
 
 );
 
 
 
-reg [3:0] in_ALU;
+    reg [3:0] in_ALU; //unión de F y ALUD
 
-reg [1:0] output_result;
+    reg [1:0] output_result; 
 
 
 
@@ -38,7 +41,7 @@ always @* begin
 
     in_ALU = {ALUD, F};
 
-    casez(in_ALU)
+    casez(in_ALU) //para soportar wildcard (z)
 
 
 
