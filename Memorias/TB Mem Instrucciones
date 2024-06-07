@@ -1,22 +1,23 @@
+
 module instr_mem_tb;
 
- 
+   // el objetivo del test bench es observar el fetch de memoria a partir de la direccion que se ingresa por pc
     
-    reg [0:47] pc;
+    reg [31:0] pc;
     wire [31:0]instr;
 
-    instr_mem d(instr,pc);  // 
+    instr_mem d(instr,pc);  // invocacion del modulo
 
     initial begin
-        // Stimulus generation
-	
+      
+	// distintos valores de pc para que sepa cual valor debe sacar
 	pc = 0;
-	
-	#50 pc = 4;
+	#20 pc = 12;
+	#30 pc = 15 ;
+	#50 pc = 47;
       
     end
 
-    // Monitor the output
-
+ 
         
 endmodule
